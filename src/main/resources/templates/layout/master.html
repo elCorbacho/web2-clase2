@@ -1,27 +1,148 @@
 <!DOCTYPE html>
 <html lang="es" 
-
-xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mi Aplicación</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Mi Aplicación</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        
+        main {
+            flex: 1;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        }
+    </style>
+    
+    <!-- Contenido específico de cada página -->
+    <th:block layout:fragment="extra-css"></th:block>
 </head>
+
 <body>
-    <header>
-        <h1>Bienvenido a mi aplicación</h1>
-    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="bi bi-tv"></i> Series & Personajes
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="bi bi-house-door"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/series}">
+                            <i class="bi bi-film"></i> Series
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/personajes}">
+                            <i class="bi bi-people"></i> Personajes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
     <main>
         <div class="container">
-            <h2>Contenido Principal</h2>
-            <p>Aquí va el contenido de la página.</p>
+            <!-- Breadcrumb opcional -->
+            <nav aria-label="breadcrumb" layout:fragment="breadcrumb">
+                <!-- Las páginas hijas pueden sobrescribir esto -->
+            </nav>
+            
+            <!-- Mensajes de alerta -->
+            <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle"></i> <span th:text="${mensaje}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle"></i> <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <!-- Contenido de la página -->
+            <div layout:fragment="content">
+                <!-- El contenido específico de cada página se insertará aquí -->
+                <div class="text-center py-5">
+                    <h1 class="display-4">Bienvenido a la Aplicación</h1>
+                    <p class="lead">Gestiona tus series y personajes favoritos</p>
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Mi Aplicación</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">
+                        <i class="bi bi-c-circle"></i> 2025 Mi Aplicación. Todos los derechos reservados.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-decoration-none me-3">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                    <a href="#" class="text-decoration-none">
+                        <i class="bi bi-info-circle"></i> Acerca de
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Bootstrap JS Bundle (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript específico de cada página -->
+    <th:block layout:fragment="extra-js"></th:block>
 </body>
 </html>

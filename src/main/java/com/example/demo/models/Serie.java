@@ -9,7 +9,10 @@ import jakarta.persistence.*;
 public class Serie {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+        strategy = GenerationType.IDENTITY
+        )
+
     private Long id;
     
     @Column(nullable = false)
@@ -24,13 +27,24 @@ public class Serie {
         cascade = {CascadeType.ALL}
     )
 
+
+    
     private List<Personaje> Personajes;
+
     public Serie (long id,String titulo, int year, List<Personaje> personajes) {
         this.id = id;
         this.titulo = titulo;
         this.year = year;
         Personajes = personajes;
     }
+
+    public Serie() {
+    }
+    
+
+
+
+
     public Long getId() {
         return id;
     }
