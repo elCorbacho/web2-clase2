@@ -5,7 +5,7 @@
       layout:decorate="~{layout/master}">
 
 <head>
-    <title>Crear Serie</title>
+    <title>Editar Serie</title>
 </head>
 
 <body>
@@ -15,16 +15,18 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
                 <li class="breadcrumb-item"><a th:href="@{/series}">Series</a></li>
-                <li class="breadcrumb-item active">Nuevo</li>
+                <li class="breadcrumb-item active">Editar</li>
             </ol>
         </nav>
 
         <!-- Header -->
         <div class="mb-4">
             <h1 class="display-6 mb-2">
-                <i class="bi bi-film text-primary"></i> Nueva Serie
+                <i class="bi bi-pencil-square text-warning"></i> Editar Serie
             </h1>
-            <p class="text-muted">Completa el formulario para crear una nueva serie</p>
+            <p class="text-muted">
+                Modificando: <strong th:text="${serie.titulo}">Título</strong>
+            </p>
         </div>
 
         <!-- Formulario -->
@@ -33,6 +35,23 @@
                 <div class="card shadow-sm">
                     <div class="card-body p-4">
                         <form th:action="@{/series/guardar}" th:object="${serie}" method="post">
+                            <!-- ID oculto -->
+                            <input type="hidden" th:field="*{id}">
+
+                            <!-- ID visible -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-hash"></i> ID
+                                </label>
+                                <input type="text" 
+                                       class="form-control form-control-lg" 
+                                       th:value="${serie.id}"
+                                       disabled>
+                                <div class="form-text">
+                                    Identificador único de la serie (no editable)
+                                </div>
+                            </div>
+
                             <!-- Título -->
                             <div class="mb-4">
                                 <label for="titulo" class="form-label fw-bold">
@@ -46,9 +65,6 @@
                                        placeholder="Ingresa el título de la serie"
                                        required
                                        maxlength="200">
-                                <div class="form-text">
-                                    El título debe ser único y descriptivo
-                                </div>
                             </div>
 
                             <!-- Año -->
@@ -65,9 +81,13 @@
                                        required
                                        min="1900"
                                        max="2100">
-                                <div class="form-text">
-                                    Año de estreno o lanzamiento de la serie
-                                </div>
+                            </div>
+
+                            <!-- Información de personajes -->
+                            <div class="alert alert-secondary">
+                                <i class="bi bi-people"></i>
+                                <strong>Personajes asociados:</strong>
+                                <span th:text="${serie.personajes != null ? serie.personajes.size() : 0}">0</span>
                             </div>
 
                             <!-- Botones -->
@@ -75,18 +95,29 @@
                                 <a th:href="@{/series}" class="btn btn-lg btn-outline-secondary">
                                     <i class="bi bi-x-circle"></i> Cancelar
                                 </a>
-                                <button type="submit" class="btn btn-lg btn-primary">
-                                    <i class="bi bi-save"></i> Guardar Serie
+                                <button type="submit" class="btn btn-lg btn-warning">
+                                    <i class="bi bi-save"></i> Actualizar Serie
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <!-- Ayuda -->
-                <div class="alert alert-info mt-4">
-                    <i class="bi bi-info-circle"></i>
-                    <strong>Tip:</strong> Después de crear la serie, podrás asignarle personajes desde la sección de personajes.
+                <!-- Opciones adicionales -->
+                <div class="card shadow-sm mt-4 border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">
+                            <i class="bi bi-exclamation-triangle"></i> Zona de Peligro
+                        </h5>
+                        <p class="card-text text-muted">
+                            Esta acción eliminará permanentemente la serie y todos los personajes asociados.
+                        </p>
+                        <a th:href="@{/series/eliminar/{id}(id=${serie.id})}" 
+                           class="btn btn-danger"
+                           onclick="return confirm('¿Estás seguro de eliminar esta serie? Esta acción eliminará también todos los personajes asociados y no se puede deshacer.')">
+                            <i class="bi bi-trash"></i> Eliminar Serie
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

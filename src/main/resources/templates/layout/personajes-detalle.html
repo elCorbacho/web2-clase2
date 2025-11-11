@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/master}">
+
+<head>
+    <title>Detalle del Personaje</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/personajes}">Personajes</a></li>
+                <li class="breadcrumb-item active">Detalle</li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="display-6 mb-2">
+                    <i class="bi bi-person-badge text-info"></i> Detalle del Personaje
+                </h1>
+            </div>
+            <div>
+                <a th:href="@{/personajes}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Card principal -->
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-person-circle"></i> 
+                            <span th:text="${personaje.nombre}">Nombre del Personaje</span>
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Información del personaje -->
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="border-start border-primary border-4 ps-3 py-2">
+                                    <label class="form-label text-muted small mb-1">ID</label>
+                                    <p class="h5 mb-0">
+                                        <span class="badge bg-secondary" th:text="${personaje.id}">1</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="border-start border-primary border-4 ps-3 py-2">
+                                    <label class="form-label text-muted small mb-1">
+                                        <i class="bi bi-person"></i> Nombre
+                                    </label>
+                                    <p class="h5 mb-0" th:text="${personaje.nombre}">Nombre del Personaje</p>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="border-start border-warning border-4 ps-3 py-2">
+                                    <label class="form-label text-muted small mb-1">
+                                        <i class="bi bi-book"></i> Biografía
+                                    </label>
+                                    <p class="mb-0" th:text="${personaje.biografia}">Biografía del Personaje</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Acciones -->
+                        <div class="d-flex gap-2 justify-content-end mt-5 pt-4 border-top">
+                            <a th:href="@{/personajes/editar/{id}(id=${personaje.id})}" 
+                               class="btn btn-warning btn-lg">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a th:href="@{/personajes/eliminar/{id}(id=${personaje.id})}" 
+                               class="btn btn-danger btn-lg"
+                               onclick="return confirm('¿Estás seguro de eliminar este personaje?')">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información adicional -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-info-circle text-info"></i> Información
+                        </h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle text-success"></i>
+                                Este personaje está almacenado en la base de datos
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-pencil-square text-warning"></i>
+                                Puedes editar sus datos en cualquier momento
+                            </li>
+                            <li>
+                                <i class="bi bi-trash text-danger"></i>
+                                La eliminación es permanente y no se puede deshacer
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

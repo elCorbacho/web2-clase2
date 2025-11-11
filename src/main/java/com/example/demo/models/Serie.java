@@ -22,20 +22,17 @@ public class Serie {
     private int year;
 
     @OneToMany(
-        fetch = FetchType.LAZY,
+        fetch = FetchType.EAGER,
         mappedBy = "serie",
         cascade = {CascadeType.ALL}
     )
-
-
-    
-    private List<Personaje> Personajes;
+    private List<Personaje> personajes;
 
     public Serie (long id,String titulo, int year, List<Personaje> personajes) {
         this.id = id;
         this.titulo = titulo;
         this.year = year;
-        Personajes = personajes;
+        this.personajes = personajes;
     }
 
     public Serie() {
@@ -64,10 +61,10 @@ public class Serie {
         this.year = year;
     }
     public List<Personaje> getPersonajes() {
-        return Personajes;
+        return personajes;
     }
     public void setPersonajes(List<Personaje> personajes) {
-        Personajes = personajes;
+        this.personajes = personajes;
     }
         
 }

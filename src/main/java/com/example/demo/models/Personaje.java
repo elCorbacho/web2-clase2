@@ -17,9 +17,8 @@ public class Personaje {
     private String biografia;
 
     @ManyToOne(
-        fetch = FetchType.LAZY
+        fetch = FetchType.EAGER
     )
-
     @JoinColumn(
         name = "id_serie"
     )

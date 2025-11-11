@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/master}">
+
+<head>
+    <title>Detalle de la Serie</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/series}">Series</a></li>
+                <li class="breadcrumb-item active">Detalle</li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="display-6 mb-2">
+                    <i class="bi bi-film text-info"></i> Detalle de la Serie
+                </h1>
+            </div>
+            <div>
+                <a th:href="@{/series}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="row">
+            <!-- Información de la serie -->
+            <div class="col-lg-5 mb-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-tv"></i> 
+                            <span th:text="${serie.titulo}">Título de la Serie</span>
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <div class="border-start border-primary border-4 ps-3 py-2">
+                                <label class="form-label text-muted small mb-1">ID</label>
+                                <p class="h5 mb-0">
+                                    <span class="badge bg-secondary" th:text="${serie.id}">1</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="border-start border-primary border-4 ps-3 py-2">
+                                <label class="form-label text-muted small mb-1">
+                                    <i class="bi bi-tv"></i> Título
+                                </label>
+                                <p class="h5 mb-0" th:text="${serie.titulo}">Título de la Serie</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="border-start border-success border-4 ps-3 py-2">
+                                <label class="form-label text-muted small mb-1">
+                                    <i class="bi bi-calendar-event"></i> Año
+                                </label>
+                                <p class="h5 mb-0" th:text="${serie.year}">2024</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="border-start border-info border-4 ps-3 py-2">
+                                <label class="form-label text-muted small mb-1">
+                                    <i class="bi bi-people"></i> Total de Personajes
+                                </label>
+                                <p class="h5 mb-0">
+                                    <span class="badge bg-info" 
+                                          th:text="${serie.personajes != null ? serie.personajes.size() : 0}">0</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Acciones -->
+                        <div class="d-flex gap-2 justify-content-end mt-5 pt-4 border-top">
+                            <a th:href="@{/series/editar/{id}(id=${serie.id})}" 
+                               class="btn btn-warning btn-lg">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a th:href="@{/series/eliminar/{id}(id=${serie.id})}" 
+                               class="btn btn-danger btn-lg"
+                               onclick="return confirm('¿Estás seguro de eliminar esta serie?')">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personajes de la serie -->
+            <div class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-people"></i> Personajes de esta Serie
+                        </h5>
+                        <span class="badge bg-light text-success" 
+                              th:text="${serie.personajes != null ? serie.personajes.size() : 0}">0</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Sin personajes -->
+                        <div th:if="${serie.personajes == null or serie.personajes.isEmpty()}" 
+                             class="text-center py-5">
+                            <i class="bi bi-inbox display-4 text-muted d-block mb-3"></i>
+                            <p class="text-muted">Esta serie aún no tiene personajes asignados</p>
+                            <a th:href="@{/personajes/nuevo}" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Agregar Personaje
+                            </a>
+                        </div>
+
+                        <!-- Lista de personajes -->
+                        <div th:if="${serie.personajes != null and !serie.personajes.isEmpty()}">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center"
+                                    th:each="personaje : ${serie.personajes}">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <i class="bi bi-person-circle text-success"></i>
+                                            <span th:text="${personaje.nombre}">Nombre</span>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-book"></i>
+                                            <span th:text="${#strings.abbreviate(personaje.biografia, 50)}">Biografía</span>
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <a th:href="@{/personajes/{id}(id=${personaje.id})}" 
+                                           class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información adicional -->
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-info-circle text-info"></i> Información
+                        </h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle text-success"></i>
+                                Esta serie está almacenada en la base de datos
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-pencil-square text-warning"></i>
+                                Puedes editar sus datos en cualquier momento
+                            </li>
+                            <li>
+                                <i class="bi bi-trash text-danger"></i>
+                                La eliminación es permanente y eliminará todos los personajes asociados
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
