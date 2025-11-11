@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Example</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Layout Example</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/series}">Series</a></li>
+            <li><a th:href="@{/personajes}">Personajes</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div th:replace="~{::section}"></div>
+    </main>
+    <footer>    
+        <p>&copy; 2024 Layout Example</p>
+    </footer>
+</body>
+</html>

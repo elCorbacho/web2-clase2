@@ -6,6 +6,8 @@ import java.util.List;
 import com.example.demo.repositories.PersonajeRepository;
 import com.example.demo.models.Personaje;
 
+
+
 @Service
 public class PersonajeService {
     
@@ -18,7 +20,7 @@ public class PersonajeService {
     }
     
     //guardar
-    public Personaje guardar(Personaje personaje) {
+    public Personaje guardar( Personaje personaje) {
         return personajeRepository.save(personaje);
     }
     

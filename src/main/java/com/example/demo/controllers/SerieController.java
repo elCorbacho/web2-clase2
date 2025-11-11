@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.Services.SerieService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.models.Serie;   
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -27,6 +26,8 @@ public class SerieController {
         return "series-lista";
     }
 
+
+    // Método para mostrar el formulario de creación de una nueva serie
     @GetMapping("/nuevo")
     public String nuevaSerie(Model model) {
         model.addAttribute("serie", new Serie());
@@ -34,13 +35,25 @@ public class SerieController {
     }
 
     @PostMapping("/guardar")
-    public String postMethodName(Serie serie) {
+    public String guardarSerie(Serie serie) {
         serieService.guardar(serie);
         return "redirect:/series";
     }
-    
-    
-    
+
+
+    // Método para eliminar una serie por su ID
+    @GetMapping("/editar/{id}")
+    public String editarSerie(@PathVariable Long id, Model model) {
+        model.addAttribute("serie", serieService.obtenerSeriePorId(id));
+        return "series-editar";
+    }
+
+    // Método para eliminar una serie por su ID
+    @GetMapping("/eliminar/{id}")
+    public String eliminarSerie(@PathVariable Long id) {
+        serieService.eliminarSerie(id);
+        return "redirect:/series";
+    }
+
     
 }
-
