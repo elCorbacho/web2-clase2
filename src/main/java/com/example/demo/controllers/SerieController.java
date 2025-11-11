@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.models.Serie;   
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
-
 @Controller
 @RequestMapping("/series")          
 public class SerieController {
@@ -25,7 +21,6 @@ public class SerieController {
         model.addAttribute("series", serieService.listarTodas());
         return "series-lista";
     }
-
 
     // Método para mostrar el formulario de creación de una nueva serie
     @GetMapping("/nuevo")
@@ -55,5 +50,4 @@ public class SerieController {
         return "redirect:/series";
     }
 
-    
 }

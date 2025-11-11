@@ -14,37 +14,73 @@ public class Personaje {
     private String nombre;
     
     @Column(nullable = false)
-    private String poder;
+    private String biografia;
+
+    @ManyToOne(
+        fetch = FetchType.LAZY
+    )
+
+    @JoinColumn(
+        name = "id_serie"
+    )
+    private Serie serie;
 
     public Personaje() {
+    }   
+
+
+    public Personaje(Long id, String nombre, String biografia, Serie serie) {
+        this.id = id;
+        this.nombre = nombre;
+        this.biografia = biografia;
+        this.serie = serie;
     }
 
-    public Personaje(String nombre, String poder) {
-        this.nombre = nombre;
-        this.poder = poder;
-    }
 
     public Long getId() {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getNombre() {
         return nombre;
     }
 
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getPoder() {
-        return poder;
+
+    public String getBiografia() {
+        return biografia;
     }
 
-    public void setPoder(String poder) {
-        this.poder = poder;
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
     }
+
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
+
+    
+
 }
+
+
+
+
+

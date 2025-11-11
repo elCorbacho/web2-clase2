@@ -1,9 +1,11 @@
 package com.example.demo.models;
 
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "series")
+
 public class Serie {
     
     @Id
@@ -12,51 +14,54 @@ public class Serie {
     
     @Column(nullable = false)
     private String titulo;
-    
-    @Column(nullable = false)
-    private String genero;
-    
-    @Column(nullable = false)
-    private int temporadas;
 
-    public Serie() {
-    }
+    @Column(nullable = false)
+    private int year;
 
-    public Serie(String titulo, String genero, int temporadas) {
+    @OneToMany(
+        fetch = FetchType.LAZY,
+        mappedBy = "serie",
+        cascade = {CascadeType.ALL}
+    )
+
+    private List<Personaje> Personajes;
+    public Serie (long id,String titulo, int year, List<Personaje> personajes) {
+        this.id = id;
         this.titulo = titulo;
-        this.genero = genero;
-        this.temporadas = temporadas;
+        this.year = year;
+        Personajes = personajes;
     }
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
-    public String getGenero() {
-        return genero;
+    public int getYear() {
+        return year;
     }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setYear(int year) {
+        this.year = year;
     }
-
-    public int getTemporadas() {
-        return temporadas;
+    public List<Personaje> getPersonajes() {
+        return Personajes;
     }
-
-    public void setTemporadas(int temporadas) {
-        this.temporadas = temporadas;
+    public void setPersonajes(List<Personaje> personajes) {
+        Personajes = personajes;
     }
+        
 }
+
+
+    
+
+
+    
+
+    
