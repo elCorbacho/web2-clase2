@@ -28,7 +28,6 @@ public class Personaje {
     public Personaje() {
     }   
 
-
     public Personaje(Long id, String nombre, String biografia, Serie serie) {
         this.id = id;
         this.nombre = nombre;
@@ -36,41 +35,33 @@ public class Personaje {
         this.serie = serie;
     }
 
-
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
     }
 
-
     public String getNombre() {
         return nombre;
     }
-
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-
     public String getBiografia() {
         return biografia;
     }
-
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
 
-
     public Serie getSerie() {
         return serie;
     }
-
 
     public void setSerie(Serie serie) {
         this.serie = serie;

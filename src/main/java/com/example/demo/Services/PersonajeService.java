@@ -15,12 +15,12 @@ public class PersonajeService {
     private PersonajeRepository personajeRepository;
     
     //listar
-    public List<Personaje> listarTodos() {
+    public List<Personaje> listarPersonajes() {
         return personajeRepository.findAll();
     }
     
     //guardar
-    public Personaje guardar( Personaje personaje) {
+    public Personaje guardarPersonaje( Personaje personaje) {
         return personajeRepository.save(personaje);
     }
     
